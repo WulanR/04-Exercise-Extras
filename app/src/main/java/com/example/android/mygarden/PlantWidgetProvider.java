@@ -21,10 +21,13 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.example.android.mygarden.provider.PlantContract;
 import com.example.android.mygarden.ui.MainActivity;
+import com.example.android.mygarden.ui.PlantDetailActivity;
 
 public class PlantWidgetProvider extends AppWidgetProvider {
 
@@ -36,6 +39,13 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         // or the MainActivity if plant ID is invalid
         // Create an Intent to launch MainActivity when clicked
         Intent intent = new Intent(context, MainActivity.class);
+        if (plantId == PlantContract.INVALID_PLANT_ID) {
+            intent = new Intent(context, MainActivity.class);
+        } else { // Set on click to open the corresponding detail activity
+            Log.d(PlantWidgetProvider.class.getSimpleName(), "plantId=" + plantId);
+            intent = new Intent(context, PlantDetailActivity.class);
+            intent.putExtra(PlantDetailActivity.EXTRA_PLANT_ID, plantId);
+        }
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.plant_widget);
