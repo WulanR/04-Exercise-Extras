@@ -95,7 +95,7 @@ public class PlantWateringService extends IntentService {
      * Handle action WaterPlant in the provided background thread with the provided
      * parameters.
      */
-    private void handleActionWaterPlants(long plantId) {
+    private void handleActionWaterPlant(long plantId) {
         Uri SINGLE_PLANT_URI = ContentUris.withAppendedId(
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLANTS).build(), plantId);
         ContentValues contentValues = new ContentValues();
